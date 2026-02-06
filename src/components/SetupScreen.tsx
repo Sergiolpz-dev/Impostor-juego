@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { GameConfig } from '../types/game'
+import { getAllCategories } from '../data/words'
 
 interface SetupScreenProps {
   onStartGame: (playerNames: string[], config: GameConfig) => void
@@ -11,6 +12,9 @@ export function SetupScreen({ onStartGame, initialPlayerNames = [] }: SetupScree
   const [newPlayerName, setNewPlayerName] = useState('')
   const [impostorCount, setImpostorCount] = useState(1)
   const [showHintToImpostor, setShowHintToImpostor] = useState(true)
+  const [selectedCategory, setSelectedCategory] = useState('Todas')
+
+  const categories = getAllCategories()
 
   const addPlayer = () => {
     const trimmedName = newPlayerName.trim()
@@ -34,7 +38,11 @@ export function SetupScreen({ onStartGame, initialPlayerNames = [] }: SetupScree
 
   const handleStartGame = () => {
     if (canStartGame) {
-      onStartGame(playerNames, { impostorCount, showHintToImpostor })
+      onStartGame(playerNames, {
+        impostorCount,
+        showHintToImpostor,
+        category: selectedCategory === 'Todas' ? undefined : selectedCategory
+      })
     }
   }
 
@@ -161,6 +169,36 @@ export function SetupScreen({ onStartGame, initialPlayerNames = [] }: SetupScree
               }`}
             />
           </div>
+        </div>
+
+        {/* Selector de categoria */}
+        <div>
+          <label className="block text-white text-sm font-medium mb-2">
+            Categoria de palabras
+          </label>
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white focus:outline-none focus:border-blue-500 appearance-none cursor-pointer"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
+              backgroundPosition: 'right 0.5rem center',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: '1.5em 1.5em',
+              paddingRight: '2.5rem'
+            }}
+          >
+            {categories.map((category) => (
+              <option key={category} value={category} className="bg-gray-800">
+                {category}
+              </option>
+            ))}
+          </select>
+          <p className="text-gray-400 text-xs mt-1">
+            {selectedCategory === 'Todas'
+              ? 'Palabras de todas las categorias'
+              : `Solo palabras de ${selectedCategory}`}
+          </p>
         </div>
       </div>
 

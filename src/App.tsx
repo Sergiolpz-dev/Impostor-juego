@@ -12,7 +12,7 @@ function App() {
   const [savedPlayerNames, setSavedPlayerNames] = useState<string[]>([])
 
   const startGame = useCallback((playerNames: string[], config: GameConfig) => {
-    const word = getRandomWord()
+    const word = getRandomWord(config.category)
     setSavedPlayerNames(playerNames)
 
     // Crear array de indices y mezclarlo para asignar impostores

@@ -19,6 +19,7 @@ export interface WordPair {
 export interface GameConfig {
   impostorCount: number
   showHintToImpostor: boolean
+  category?: string
 }
 
 export interface GameState {
