@@ -2,6 +2,12 @@
 
 Juego de deducción social para grupos, inspirado en juegos como Mafia y Among Us. Diseñado para jugar de forma local pasando el dispositivo entre jugadores (pass & play).
 
+## 🎬 Demo
+
+https://github.com/user-attachments/assets/your-video-id-here
+
+> **Nota**: Para incluir el video, primero renderízalo con `npm run remotion:render`, luego súbelo arrastrándolo al editor de GitHub cuando edites este README. GitHub generará automáticamente la URL del video.
+
 ## El Juego
 
 ### Objetivo
@@ -74,12 +80,57 @@ npm run dev
 
 ## Scripts disponibles
 
+### Aplicación
 | Script            | Descripción                         |
 | ----------------- | ----------------------------------- |
 | `npm run dev`     | Inicia el servidor de desarrollo    |
 | `npm run build`   | Compila para producción             |
 | `npm run preview` | Previsualiza la build de producción |
 | `npm run lint`    | Ejecuta ESLint                      |
+
+### Video Promocional
+| Script                   | Descripción                                    |
+| ------------------------ | ---------------------------------------------- |
+| `npm run remotion:preview` | Abre el preview interactivo del video (http://localhost:3000) |
+| `npm run remotion:render`  | Renderiza el video final en `out/video.mp4`    |
+
+> El video promocional muestra todas las fases del juego en 15 segundos, optimizado para redes sociales (formato vertical 1080x1920).
+
+## 🎥 Video Promocional
+
+Este proyecto incluye un video promocional profesional de 15 segundos creado con [Remotion](https://remotion.dev/), optimizado para redes sociales.
+
+### Características del video:
+- ✅ **5 escenas animadas**: Intro, Setup, Revelación de roles, Gameplay y Outro
+- ✅ **Formato vertical** 1080x1920 (perfecto para Instagram Reels, TikTok, YouTube Shorts)
+- ✅ **Animaciones fluidas** con interpolaciones y transiciones profesionales
+- ✅ **Duración ideal** de 15 segundos
+- ✅ **Muestra todas las fases** del juego
+
+### Cómo usar:
+
+1. **Ver el video en desarrollo**:
+   ```bash
+   npm run remotion:preview
+   ```
+   Abre http://localhost:3000 para ver el video con controles interactivos
+
+2. **Renderizar el video final**:
+   ```bash
+   npm run remotion:render
+   ```
+   Genera `out/video.mp4` listo para compartir
+
+### Personalizar el video:
+
+Puedes editar las escenas en `remotion/scenes/` para cambiar:
+- Nombres de jugadores
+- Palabras del juego
+- Colores y gradientes
+- Duración de cada escena
+- Texto del Call-to-Action
+
+Ver [remotion/README.md](remotion/README.md) para más información.
 
 ## Contribuciones
 

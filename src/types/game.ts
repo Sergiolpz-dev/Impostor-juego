@@ -29,6 +29,7 @@ export interface GameState {
   currentWord: WordPair | null
   currentPlayerIndex: number
   winner: 'civilians' | 'impostors' | null
+  startingPlayer: string | null
 }
 
 export const initialGameState: GameState = {
@@ -41,4 +42,5 @@ export const initialGameState: GameState = {
   currentWord: null,
   currentPlayerIndex: 0,
   winner: null,
+  startingPlayer: null,
 }

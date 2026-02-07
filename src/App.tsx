@@ -53,10 +53,17 @@ function App() {
   }, [])
 
   const handleAllPlayersSawRoles = useCallback(() => {
-    setGameState((prev) => ({
-      ...prev,
-      phase: 'playing',
-    }))
+    setGameState((prev) => {
+      // Seleccionar un jugador al azar para empezar
+      const randomIndex = Math.floor(Math.random() * prev.players.length)
+      const startingPlayerName = prev.players[randomIndex].name
+
+      return {
+        ...prev,
+        phase: 'playing',
+        startingPlayer: startingPlayerName,
+      }
+    })
   }, [])
 
   const checkWinCondition = useCallback(
@@ -135,6 +142,7 @@ function App() {
         <GameScreen
           players={gameState.players}
           currentWord={gameState.currentWord}
+          startingPlayer={gameState.startingPlayer}
           onEliminatePlayer={handleEliminatePlayer}
         />
       )}

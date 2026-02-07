@@ -1,19 +1,32 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { Player, WordPair } from '../types/game'
 
 interface GameScreenProps {
   players: Player[]
   currentWord: WordPair
+  startingPlayer: string | null
   onEliminatePlayer: (playerId: string) => void
 }
 
 export function GameScreen({
   players,
   currentWord,
+  startingPlayer,
   onEliminatePlayer,
 }: GameScreenProps) {
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null)
   const [eliminatedPlayer, setEliminatedPlayer] = useState<Player | null>(null)
+  const [showStartingPlayer, setShowStartingPlayer] = useState(true)
+
+  useEffect(() => {
+    // Auto-cerrar el modal después de 3 segundos
+    if (showStartingPlayer && startingPlayer) {
+      const timer = setTimeout(() => {
+        setShowStartingPlayer(false)
+      }, 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [showStartingPlayer, startingPlayer])
 
   const alivePlayers = players.filter((p) => p.isAlive)
   const deadPlayers = players.filter((p) => !p.isAlive)
@@ -152,8 +165,8 @@ export function GameScreen({
           <div
             className={`rounded-2xl p-6 max-w-sm w-full border ${
               eliminatedPlayer.role === 'impostor'
-                ? 'bg-gradient-to-br from-red-900 to-red-800 border-red-500'
-                : 'bg-gradient-to-br from-blue-900 to-blue-800 border-blue-500'
+                ? 'bg-linear-to-br from-red-900 to-red-800 border-red-500'
+                : 'bg-linear-to-br from-blue-900 to-blue-800 border-blue-500'
             }`}
           >
             <h3 className="text-white text-xl font-bold text-center mb-2">
@@ -183,6 +196,25 @@ export function GameScreen({
             >
               Continuar
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de jugador que empieza */}
+      {showStartingPlayer && startingPlayer && (
+        <div
+          className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50"
+          onClick={() => setShowStartingPlayer(false)}
+        >
+          <div className="bg-linear-to-br from-purple-900 to-purple-800 rounded-2xl p-8 max-w-sm w-full border border-purple-500 shadow-2xl">
+            <div className="text-center">
+              <h3 className="text-white text-3xl font-bold mb-4">
+                {startingPlayer}
+              </h3>
+              <p className="text-purple-200 text-xl font-medium">
+                empieza
+              </p>
+            </div>
           </div>
         </div>
       )}
