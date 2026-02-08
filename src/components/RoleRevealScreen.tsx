@@ -8,6 +8,7 @@ interface RoleRevealScreenProps {
   config: GameConfig
   onPlayerSawRole: (playerIndex: number) => void
   onAllPlayersSawRoles: () => void
+  onAbandonGame: () => void
 }
 
 export function RoleRevealScreen({
@@ -17,6 +18,7 @@ export function RoleRevealScreen({
   config,
   onPlayerSawRole,
   onAllPlayersSawRoles,
+  onAbandonGame,
 }: RoleRevealScreenProps) {
   const [isRevealing, setIsRevealing] = useState(false)
   const [hasSeenRole, setHasSeenRole] = useState(false)
@@ -79,6 +81,14 @@ export function RoleRevealScreen({
 
   return (
     <div className="flex-1 flex flex-col p-4 max-w-md mx-auto w-full">
+      {/* Boton abandonar */}
+      <button
+        onClick={onAbandonGame}
+        className="absolute top-4 right-4 px-3 py-2 rounded-lg bg-white/10 border border-white/20 text-white text-sm hover:bg-red-500/20 hover:border-red-500/50 transition-colors"
+      >
+        ✕ Abandonar
+      </button>
+
       <div className="text-center mb-4">
         <p className="text-gray-400 text-sm">
           Jugador {currentPlayerIndex + 1} de {players.length}

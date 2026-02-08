@@ -5,14 +5,19 @@ import { getAllCategories } from '../data/words'
 interface SetupScreenProps {
   onStartGame: (playerNames: string[], config: GameConfig) => void
   initialPlayerNames?: string[]
+  initialCategory?: string
 }
 
-export function SetupScreen({ onStartGame, initialPlayerNames = [] }: SetupScreenProps) {
+export function SetupScreen({
+  onStartGame,
+  initialPlayerNames = [],
+  initialCategory = 'Todas'
+}: SetupScreenProps) {
   const [playerNames, setPlayerNames] = useState<string[]>(initialPlayerNames)
   const [newPlayerName, setNewPlayerName] = useState('')
   const [impostorCount, setImpostorCount] = useState(1)
   const [showHintToImpostor, setShowHintToImpostor] = useState(true)
-  const [selectedCategory, setSelectedCategory] = useState('Todas')
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory)
 
   const categories = getAllCategories()
 
@@ -159,7 +164,7 @@ export function SetupScreen({ onStartGame, initialPlayerNames = [] }: SetupScree
             </p>
           </div>
           <div
-            className={`relative w-14 h-8 rounded-full transition-colors flex-shrink-0 ${
+            className={`relative w-14 h-8 rounded-full transition-colors shrink-0 ${
               showHintToImpostor ? 'bg-green-500' : 'bg-gray-600'
             }`}
           >

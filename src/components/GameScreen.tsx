@@ -6,6 +6,7 @@ interface GameScreenProps {
   currentWord: WordPair
   startingPlayer: string | null
   onEliminatePlayer: (playerId: string) => void
+  onAbandonGame: () => void
 }
 
 export function GameScreen({
@@ -13,6 +14,7 @@ export function GameScreen({
   currentWord,
   startingPlayer,
   onEliminatePlayer,
+  onAbandonGame,
 }: GameScreenProps) {
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null)
   const [eliminatedPlayer, setEliminatedPlayer] = useState<Player | null>(null)
@@ -51,6 +53,14 @@ export function GameScreen({
 
   return (
     <div className="flex-1 flex flex-col p-4 max-w-md mx-auto w-full">
+      {/* Boton abandonar */}
+      <button
+        onClick={onAbandonGame}
+        className="absolute top-4 right-4 px-3 py-2 rounded-lg bg-white/10 border border-white/20 text-white text-sm hover:bg-red-500/20 hover:border-red-500/50 transition-colors"
+      >
+        ✕ Abandonar
+      </button>
+
       <div className="text-center mb-6">
         <h1 className="text-2xl font-bold text-white mb-1">Debate</h1>
         <p className="text-gray-400 text-sm">
@@ -203,16 +213,22 @@ export function GameScreen({
       {/* Modal de jugador que empieza */}
       {showStartingPlayer && startingPlayer && (
         <div
-          className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50"
+          className="fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50 backdrop-blur-sm"
           onClick={() => setShowStartingPlayer(false)}
         >
-          <div className="bg-linear-to-br from-purple-900 to-purple-800 rounded-2xl p-8 max-w-sm w-full border border-purple-500 shadow-2xl">
+          <div className="bg-linear-to-br from-purple-900 to-purple-800 rounded-2xl p-8 max-w-sm w-full border-2 border-purple-400 shadow-2xl animate-pulse">
             <div className="text-center">
-              <h3 className="text-white text-3xl font-bold mb-4">
+              <p className="text-purple-300 text-lg font-medium mb-2">
+                🎯 Jugador inicial
+              </p>
+              <h3 className="text-white text-4xl font-bold mb-4 drop-shadow-lg">
                 {startingPlayer}
               </h3>
-              <p className="text-purple-200 text-xl font-medium">
-                empieza
+              <p className="text-purple-200 text-2xl font-semibold">
+                ¡Empieza tú!
+              </p>
+              <p className="text-purple-300 text-sm mt-4 opacity-75">
+                Toca para cerrar
               </p>
             </div>
           </div>

@@ -10,8 +10,11 @@ import { EndGameScreen } from './components/EndGameScreen'
 function App() {
   const [gameState, setGameState] = useState<GameState>(initialGameState)
   const [savedPlayerNames, setSavedPlayerNames] = useState<string[]>([])
+  const [savedCategory, setSavedCategory] = useState<string>('Todas')
 
   const startGame = useCallback((playerNames: string[], config: GameConfig) => {
+    // Guardar la categoría seleccionada
+    setSavedCategory(config.category || 'Todas')
     const word = getRandomWord(config.category)
     setSavedPlayerNames(playerNames)
 
@@ -39,6 +42,7 @@ function App() {
       currentWord: word,
       currentPlayerIndex: 0,
       winner: null,
+      startingPlayer: null,
     })
   }, [])
 
@@ -118,12 +122,17 @@ function App() {
     setGameState(initialGameState)
   }, [])
 
+  const handleAbandonGame = useCallback(() => {
+    setGameState(initialGameState)
+  }, [])
+
   return (
     <div className="h-dvh flex flex-col overflow-hidden">
       {gameState.phase === 'setup' && (
         <SetupScreen
           onStartGame={startGame}
           initialPlayerNames={savedPlayerNames}
+          initialCategory={savedCategory}
         />
       )}
 
@@ -135,6 +144,7 @@ function App() {
           config={gameState.config}
           onPlayerSawRole={handlePlayerSawRole}
           onAllPlayersSawRoles={handleAllPlayersSawRoles}
+          onAbandonGame={handleAbandonGame}
         />
       )}
 
@@ -144,6 +154,7 @@ function App() {
           currentWord={gameState.currentWord}
           startingPlayer={gameState.startingPlayer}
           onEliminatePlayer={handleEliminatePlayer}
+          onAbandonGame={handleAbandonGame}
         />
       )}
 
@@ -155,6 +166,7 @@ function App() {
             players={gameState.players}
             currentWord={gameState.currentWord}
             onPlayAgain={handlePlayAgain}
+            onAbandonGame={handleAbandonGame}
           />
         )}
     </div>

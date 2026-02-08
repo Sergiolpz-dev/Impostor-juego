@@ -5,6 +5,7 @@ interface EndGameScreenProps {
   players: Player[]
   currentWord: WordPair
   onPlayAgain: () => void
+  onAbandonGame: () => void
 }
 
 export function EndGameScreen({
@@ -12,6 +13,7 @@ export function EndGameScreen({
   players,
   currentWord,
   onPlayAgain,
+  onAbandonGame,
 }: EndGameScreenProps) {
   const impostors = players.filter((p) => p.role === 'impostor')
   const civilians = players.filter((p) => p.role === 'civilian')
@@ -20,12 +22,20 @@ export function EndGameScreen({
 
   return (
     <div className="flex-1 flex flex-col p-4 max-w-md mx-auto w-full">
+      {/* Boton abandonar */}
+      <button
+        onClick={onAbandonGame}
+        className="absolute top-4 right-4 px-3 py-2 rounded-lg bg-white/10 border border-white/20 text-white text-sm hover:bg-red-500/20 hover:border-red-500/50 transition-colors"
+      >
+        ✕ Abandonar
+      </button>
+
       {/* Resultado */}
       <div
         className={`flex-1 flex flex-col items-center justify-center rounded-2xl p-6 mb-4 ${
           civilsWon
-            ? 'bg-gradient-to-br from-blue-900/50 to-blue-800/50 border border-blue-500/50'
-            : 'bg-gradient-to-br from-red-900/50 to-red-800/50 border border-red-500/50'
+            ? 'bg-linear-to-br from-blue-900/50 to-blue-800/50 border border-blue-500/50'
+            : 'bg-linear-to-br from-red-900/50 to-red-800/50 border border-red-500/50'
         }`}
       >
         <div
@@ -137,7 +147,7 @@ export function EndGameScreen({
       {/* Boton jugar de nuevo */}
       <button
         onClick={onPlayAgain}
-        className="w-full py-4 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-lg hover:from-purple-700 hover:to-pink-700 transition-all"
+        className="w-full py-4 rounded-lg bg-linear-to-r from-purple-600 to-pink-600 text-white font-bold text-lg hover:from-purple-700 hover:to-pink-700 transition-all"
       >
         Jugar de Nuevo
       </button>
